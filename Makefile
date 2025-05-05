@@ -1,5 +1,4 @@
-.PHONY: help clean lint test test-ci test-packaging coverage docs release
-.DEFAULT_GOAL := help
+.PHONY: clean lint test test-ci test-packaging coverage docs release
 
 clean:
 	rm -fr build/
@@ -20,17 +19,17 @@ _lint_autofixing: # run the linters that support autofixing, with autofixing ena
 	uv run ruff check makehlp tests --fix
 	uv run isort makehlp tests
 	uv run black makehlp tests  # (rerun. ruff/isort and black sometimes conflict)
-	@if which update_readme_usage > /dev/null 2>&1; then \
-		uv run update_readme_usage; \
-	fi
+	# @if which update_readme_usage > /dev/null 2>&1; then \
+	# 	uv run update_readme_usage; \
+	# fi
 
 _lint_autofixing_disabled: # run the linters that support autofixing, but with autofixing disabled
 	uv run black makehlp tests --check
 	uv run ruff check makehlp tests
 	uv run isort makehlp tests --check
-	@if which update_readme_usage > /dev/null 2>&1; then \
-		uv run update_readme_usage --check; \
-	fi
+	# @if which update_readme_usage > /dev/null 2>&1; then \
+	# 	uv run update_readme_usage --check; \
+	# fi
 
 _lint_nonautofixing: # run the linters that don't support autofixing
 	uv run codespell --check-filenames 'tests/**.py' makehlp pyproject.toml README.md Makefile docs --skip '**/_build'
