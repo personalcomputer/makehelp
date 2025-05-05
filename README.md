@@ -1,6 +1,8 @@
 # makehelp
 
-makehelp
+Always-avaiable script to analyze any unknown makefile and print out an inferred usage/help message explaining the available targets.
+
+Many versions of this concept exist.. but this is mine.
 
 ## Usage
 
