@@ -4,6 +4,14 @@ Always-available script to analyze any unknown makefile and print out an inferre
 
 Many versions of this concept exist.. but this one is mine.
 
+## Install
+
+makehlp is a Python package and can be installed with pip, or with uv:
+
+```
+uv tool install makehlp
+```
+
 ## Example output
 
 ```
