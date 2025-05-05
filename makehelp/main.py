@@ -1,8 +1,8 @@
-import sys
+import argparse
 import os
 import re
 import shutil
-import argparse
+import sys
 
 
 def truncate(s, max_width):
@@ -125,7 +125,7 @@ def parse_makefile(makefile):
 
 
 def inject_help_target(makefile_path):
-    with open(makefile_path, "r") as f:
+    with open(makefile_path) as f:
         content = f.read()
 
     help_match = re.search(r"^help:.*?\n(?:\t.*?\n)*", content, re.MULTILINE)
@@ -137,8 +137,8 @@ def inject_help_target(makefile_path):
             sys.exit(0)
         else:
             print(
-                f"Error: A pre-existing 'help' target already exists in {makefile_path} (line {line_number}). " +
-                "Remove it first.",
+                f"Error: A pre-existing 'help' target already exists in {makefile_path} (line {line_number}). "
+                + "Remove it first.",
                 file=sys.stderr,
             )
             sys.exit(1)
@@ -198,7 +198,7 @@ def main():
         inject_help_target(makefile_path)
         sys.exit(0)
 
-    with open(makefile_path, "r") as f:
+    with open(makefile_path) as f:
         makefile = f.read()
 
     parsed_makefile = parse_makefile(makefile)
@@ -206,8 +206,9 @@ def main():
     if args.target:
         # Special mode: Print the full recipe (code) for a specific target
         if args.target not in parsed_makefile:
+            targets_str = ", ".join(parsed_makefile.keys())
             print(
-                f"Error: Target '{args.target}' not found in Makefile. Available targets: {', '.join(parsed_makefile.keys())}",
+                f"Error: Target '{args.target}' not found in Makefile. Available targets: {targets_str}",
                 file=sys.stderr,
             )
             sys.exit(1)

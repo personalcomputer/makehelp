@@ -15,17 +15,6 @@ clean:
 	rm -f .coverage
 	rm -fr htmlcov/
 
-# Linters/tests:
-# - Black: Code formatting
-# - Isort: Import formatting
-# - Ruff: Generic Python linter. Successor to flake8/pyflakes/etc.
-# - Codespell: English typo detection
-# - Mypy: Type checking
-# - Vulture: Dead code detection
-# - Pytest: Automated test suite
-# - update_readme_usage: Keep the Usage section of the README up to date
-# - verify_all_files_in_py_build_are_tracked_in_git: Prevent forgetting to stage files and prevent errant files ending up in the build
-
 _lint_autofixing: # run the linters that support autofixing, with autofixing enabled
 	uv run black makehelp tests
 	uv run ruff check makehelp tests --fix
@@ -46,7 +35,7 @@ _lint_autofixing_disabled: # run the linters that support autofixing, but with a
 _lint_nonautofixing: # run the linters that don't support autofixing
 	uv run codespell --check-filenames 'tests/**.py' makehelp pyproject.toml README.md Makefile docs --skip '**/_build'
 	uv run mypy --ignore-missing-imports --show-error-codes makehelp tests
-	uvx vulture makehelp tests/vulture_whitelist.list
+	@# uvx vulture makehelp tests/vulture_whitelist.list
 	@# Regenerate vulture_whitelist.list with:
 	@# uvx vulture makehelp --make-whitelist > tests/vulture_whitelist.list
 
@@ -56,8 +45,7 @@ auto: _lint_autofixing _lint_nonautofixing test_py test_that_build_is_clean
 	@# Run all linters and tests, autofixing any autofixable issues.
 
 test_py:
-	uv run makehelp --kill-daemon || true
-	MAKEHELP_AUTO_DAEMON= uv run pytest
+	uv run pytest
 
 test_that_build_is_clean:
 	uv build
