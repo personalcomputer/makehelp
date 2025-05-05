@@ -1,13 +1,13 @@
-# makehelp
+# makehlp (make help)
 
-Always-avaiable script to analyze any unknown makefile and print out an inferred usage/help message explaining the available targets.
+Always-available script to analyze any unknown makefile and print out an inferred usage/help message explaining the available targets.
 
-Many versions of this concept exist.. but this is mine.
+Many versions of this concept exist.. but this one is mine.
 
 ## Usage
 
 ```
-usage: makehelp [-h] [--file MAKEFILE] [--inject] [target]
+usage: makehlp [-h] [--file MAKEFILE] [--inject] [target]
 
 Process a Makefile and display help information
 

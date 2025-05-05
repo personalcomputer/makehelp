@@ -16,28 +16,28 @@ clean:
 	rm -fr htmlcov/
 
 _lint_autofixing: # run the linters that support autofixing, with autofixing enabled
-	uv run black makehelp tests
-	uv run ruff check makehelp tests --fix
-	uv run isort makehelp tests
-	uv run black makehelp tests  # (rerun. ruff/isort and black sometimes conflict)
+	uv run black makehlp tests
+	uv run ruff check makehlp tests --fix
+	uv run isort makehlp tests
+	uv run black makehlp tests  # (rerun. ruff/isort and black sometimes conflict)
 	@if which update_readme_usage > /dev/null 2>&1; then \
 		uv run update_readme_usage; \
 	fi
 
 _lint_autofixing_disabled: # run the linters that support autofixing, but with autofixing disabled
-	uv run black makehelp tests --check
-	uv run ruff check makehelp tests
-	uv run isort makehelp tests --check
+	uv run black makehlp tests --check
+	uv run ruff check makehlp tests
+	uv run isort makehlp tests --check
 	@if which update_readme_usage > /dev/null 2>&1; then \
 		uv run update_readme_usage --check; \
 	fi
 
 _lint_nonautofixing: # run the linters that don't support autofixing
-	uv run codespell --check-filenames 'tests/**.py' makehelp pyproject.toml README.md Makefile docs --skip '**/_build'
-	uv run mypy --ignore-missing-imports --show-error-codes makehelp tests
-	@# uvx vulture makehelp tests/vulture_whitelist.list
+	uv run codespell --check-filenames 'tests/**.py' makehlp pyproject.toml README.md Makefile docs --skip '**/_build'
+	uv run mypy --ignore-missing-imports --show-error-codes makehlp tests
+	@# uvx vulture makehlp tests/vulture_whitelist.list
 	@# Regenerate vulture_whitelist.list with:
-	@# uvx vulture makehelp --make-whitelist > tests/vulture_whitelist.list
+	@# uvx vulture makehlp --make-whitelist > tests/vulture_whitelist.list
 
 lint: _lint_autofixing_disabled _lint_nonautofixing
 
@@ -60,7 +60,7 @@ test_packaging:
 	bash ./test_in_container.sh
 
 coverage:
-	uv run coverage run --source makehelp -m pytest
+	uv run coverage run --source makehlp -m pytest
 	uv run coverage report -m
 	uv run coverage html
 	$(BROWSER) htmlcov/index.html

@@ -4,13 +4,13 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from makehelp.main import main
+from makehlp.main import main
 
 
 class TestCLI(unittest.TestCase):
     def test_cli_help(self):
         with patch("sys.stdout", new=io.StringIO()) as fake_out:
-            with patch("sys.argv", ["makehelp", "--help"]):
+            with patch("sys.argv", ["makehlp", "--help"]):
                 try:
                     main()
                 except SystemExit as e:
@@ -31,7 +31,7 @@ test: # Test target
 
         try:
             with patch("sys.stdout", new=io.StringIO()) as fake_out:
-                with patch("sys.argv", ["makehelp", "--file", makefile_path, "test"]):
+                with patch("sys.argv", ["makehlp", "--file", makefile_path, "test"]):
                     main()
 
                 output = fake_out.getvalue()
@@ -56,7 +56,7 @@ build: # Build the project
 
         try:
             with patch("sys.stdout", new=io.StringIO()) as fake_out:
-                with patch("sys.argv", ["makehelp", "--file", makefile_path]):
+                with patch("sys.argv", ["makehlp", "--file", makefile_path]):
                     main()
 
                 output = fake_out.getvalue()
